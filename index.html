@@ -6,9 +6,10 @@
     <title>Pirate Logbook with Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        /* Pirate Logbook Themed Styles */
         body {
             font-family: 'Georgia', serif;
-            background-image: url('MAP.jpg');
+            background-image: url('MAP.jpg'); /* Updated background image */
             background-size: cover;
             background-position: center center;
             color: #fff;
@@ -36,41 +37,129 @@
             color: #f7d65b;
         }
 
-        #pirate-flag {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 150px;
-            animation: wave 2s infinite;
-        }
-
-        @keyframes wave {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(10deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        #ship-wheel {
-            position: absolute;
-            top: 50px;
-            right: 50px;
-            width: 120px;
+        .log-entry {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
             cursor: pointer;
         }
 
-        #pirate-cannon {
+        .log-entry h2 {
+            margin: 0;
+            font-size: 1.6rem;
+            color: #f7d65b;
+        }
+
+        .log-entry p {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .log-details {
+            display: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .log-entry:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .log-entry:hover .log-details {
+            display: block;
+        }
+
+        /* Pirate Ship Interactive Styles */
+        #pirate-ship {
             position: absolute;
             bottom: 30px;
-            left: 30px;
-            width: 120px;
+            right: 50px;
+            width: 200px;
+            cursor: pointer;
+            transition: transform 2s ease-in-out;
+        }
+
+        /* Map Styles */
+        #map {
+            height: 400px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 2px solid #f7d65b;
+            width: 100%;
+        }
+
+        /* WANTED Poster Styles */
+        #wanted-poster {
+            display: block;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #f7d65b;
+            font-size: 1.5rem;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        #wanted-image {
+            width: 250px;
+            border-radius: 10px;
+            margin-top: 10px;
             cursor: pointer;
         }
 
-        #map {
-            height: 400px;
-            width: 100%;
+        /* Captain of the Ship Message */
+        #captain-message {
+            font-size: 2rem;
+            color: #f7d65b;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
+        /* WANTED Text */
+        #wanted-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #bounty-amount {
+            font-size: 3rem;
+            color: red;
             margin-top: 20px;
+        }
+
+        /* Rumor Bubbles */
+        .rumor-bubble-container {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .rumor-bubble {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
             border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .rumor-bubble h3 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #f7d65b;
+        }
+
+        .rumor-content {
+            margin-top: 10px;
+            font-size: 1rem;
         }
 
         /* Audio Controls */
@@ -83,6 +172,24 @@
             padding: 10px;
             border-radius: 10px;
             color: #f7d65b;
+        }
+
+        /* Ship Wheel */
+        #ship-wheel {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 120px;
+            cursor: pointer;
+        }
+
+        /* Pirate Cannon */
+        #pirate-cannon {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            width: 120px;
+            cursor: pointer;
         }
 
     </style>
@@ -99,17 +206,26 @@
         <h1>Pirate Logbook</h1>
 
         <!-- Logbook Entries -->
-        <div class="log-entry">
+        <div class="log-entry" onclick="toggleDetails('entry1')">
             <h2>Entry #1: Picking Up My First Crewmate</h2>
             <p>I’ve found a reliable sailor! We set off together to the high seas!</p>
+            <div id="entry1" class="log-details">
+                <p>The winds are favorable, and the crew is ready. The horizon awaits!</p>
+            </div>
         </div>
 
-        <div class="log-entry">
+        <div class="log-entry" onclick="toggleDetails('entry2')">
             <h2>Entry #2: A Funny Chef Joins the Crew</h2>
             <p>A funny cook joined our crew today! He’s got a strange way of making meals, but they always taste amazing.</p>
+            <div id="entry2" class="log-details">
+                <p>The crew is laughing non-stop at his jokes, and his food is to die for!</p>
+            </div>
         </div>
 
-        <!-- Pirate Wheel -->
+        <!-- Pirate Ship Image -->
+        <img id="pirate-ship" src="ship.png" alt="Pirate Ship" onclick="shipClicked()">
+
+        <!-- Ship Wheel -->
         <img src="ship-wheel.png" alt="Ship Wheel" id="ship-wheel" onclick="rotateWheel()">
 
         <!-- Pirate Cannon -->
@@ -117,6 +233,33 @@
 
         <!-- Map -->
         <div id="map"></div>
+
+        <!-- Captain of the Ship Message -->
+        <div id="captain-message">
+            The Captain
+        </div>
+
+        <!-- Rumor Section -->
+        <div class="rumor-bubble-container">
+            <div class="rumor-bubble">
+                <h3>Pirate #1:</h3>
+                <p>"Aye, ye heard about Joyboy? He ain't nothin' special. A boy with a smile and a big mouth. All this 'freedom' talk? Bah! He’s just a fool with a ship and a crew who’s always in danger. They say he’s ‘Captain’, but I reckon it’s just by luck he ain’t dead yet!"</p>
+            </div>
+
+            <div class="rumor-bubble">
+                <h3>Pirate #2:</h3>
+                <p>"Aye, Joyboy’s the real deal. Free as the wind, and a true leader! I say ye wrong, mate. Joyboy’s no fool. His heart’s as big as the ocean, and his smile lights up the crew’s spirits. Not to mention, his strength, determination, and love for his mates make him a pirate like no other. Ye can’t fake that kind of freedom, mate!”</p>
+            </div>
+        </div>
+
+        <!-- WANTED Poster -->
+        <div id="wanted-poster">
+            <img id="wanted-image" src="your-image.png" alt="Wanted Poster" onclick="showWantedPoster()">
+            <div>WANTED</div>
+            <div>DEAD OR ALIVE</div>
+            <div id="wanted-text"></div>
+            <div id="bounty-amount"></div>
+        </div>
 
         <!-- Audio Controls (Stop Audio Button) -->
         <div id="audio-controls">
@@ -126,7 +269,39 @@
     </div>
 
     <script>
-        // Rotate the Ship Wheel
+        function toggleDetails(entryId) {
+            var entry = document.getElementById(entryId);
+            entry.style.display = entry.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function shipClicked() {
+            document.getElementById('pirate-ship').style.transform = 'rotate(360deg)';
+            alert('Set sail for adventure!');
+        }
+
+        let clickCount = 0;
+
+        function showWantedPoster() {
+            var wantedText = document.getElementById('wanted-text');
+            var bountyAmount = document.getElementById('bounty-amount');
+            
+            wantedText.textContent = 'JOYBOY';  // Name in large text
+            bountyAmount.textContent = 'Bounty: ?,???,???,??? GOLD';  // Bounty amount in red text
+
+            if (clickCount === 0) {
+                var poster = document.getElementById('wanted-poster');
+                var message = document.createElement('div');
+                message.textContent = 'Click the image for a reward!';
+                message.style.color = '#f7d65b';
+                message.style.fontSize = '1.2rem';
+                poster.appendChild(message);
+            }
+
+            alert("MEAT");
+            clickCount++;
+        }
+
+        // Ship Wheel Rotation
         function rotateWheel() {
             document.getElementById('ship-wheel').style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
         }
