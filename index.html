@@ -9,7 +9,7 @@
         /* Pirate Logbook Themed Styles */
         body {
             font-family: 'Georgia', serif;
-            background-image: url('MAP.jpg'); /* Updated background image */
+            background-image: url('PIRATEMAP'); /* Updated background image */
             background-size: cover;
             background-position: center center;
             color: #fff;
@@ -260,12 +260,11 @@
             <div id="wanted-text"></div>
             <div id="bounty-amount"></div>
         </div>
+    </div>
 
-        <!-- Audio Controls (Stop Audio Button) -->
-        <div id="audio-controls">
-            <button onclick="stopAudio()">Stop Audio</button>
-        </div>
-
+    <!-- Audio Controls (Stop Button) -->
+    <div id="audio-controls">
+        <button onclick="stopAudio()">Stop Audio</button>
     </div>
 
     <script>
@@ -279,42 +278,17 @@
             alert('Set sail for adventure!');
         }
 
-        let clickCount = 0;
-
-        function showWantedPoster() {
-            var wantedText = document.getElementById('wanted-text');
-            var bountyAmount = document.getElementById('bounty-amount');
-            
-            wantedText.textContent = 'JOYBOY';  // Name in large text
-            bountyAmount.textContent = 'Bounty: ?,???,???,??? GOLD';  // Bounty amount in red text
-
-            if (clickCount === 0) {
-                var poster = document.getElementById('wanted-poster');
-                var message = document.createElement('div');
-                message.textContent = 'Click the image for a reward!';
-                message.style.color = '#f7d65b';
-                message.style.fontSize = '1.2rem';
-                poster.appendChild(message);
-            }
-
-            alert("MEAT");
-            clickCount++;
-        }
-
-        // Ship Wheel Rotation
         function rotateWheel() {
             document.getElementById('ship-wheel').style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
         }
 
-        // Pirate Cannon Click Event
         function fireCannon() {
             alert("Boom! The cannon fires!");
         }
 
-        // Stop Audio Function
         function stopAudio() {
             var audio = document.getElementById('background-audio');
-            audio.pause();  // Stop the audio
+            audio.pause();
         }
 
         // Initialize the Map using Leaflet.js
@@ -326,7 +300,6 @@
 
         var marker = L.marker([51.5, -0.09]).addTo(map); // Example marker
         marker.bindPopup("This is a location on your pirate map!").openPopup();
-
     </script>
 
 </body>
