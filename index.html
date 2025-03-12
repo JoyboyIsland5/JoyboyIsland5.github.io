@@ -8,9 +8,10 @@
     <style>
         /* Pirate Logbook Themed Styles */
         body {
-            font-family: 'Georgia', serif; /* A more pirate-like font */
-            background-image: url('your-background-image.png'); /* Updated to your background image */
+            font-family: 'Georgia', serif;
+            background-image: url('your-background-image.png'); /* Make sure the file exists in the same directory */
             background-size: cover;
+            background-position: center center;
             color: #fff;
             margin: 0;
             padding: 20px;
@@ -24,7 +25,7 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            border: 5px solid #b38b4d; /* Gold-like border for a pirate theme */
+            border: 5px solid #b38b4d;
         }
 
         h1 {
@@ -32,7 +33,7 @@
             font-size: 3rem;
             text-transform: uppercase;
             margin-bottom: 40px;
-            font-family: 'PirateFont', serif; /* Custom Pirate font */
+            font-family: 'PirateFont', serif;
             color: #f7d65b;
         }
 
@@ -77,7 +78,7 @@
             position: absolute;
             bottom: 30px;
             right: 50px;
-            width: 100px;
+            width: 200px; /* Adjusted size */
             cursor: pointer;
             transition: transform 2s ease-in-out;
         }
@@ -88,11 +89,12 @@
             margin-top: 20px;
             border-radius: 10px;
             border: 2px solid #f7d65b;
+            width: 100%; /* Fixed map width to avoid layout issues */
         }
 
         /* WANTED Poster Styles */
         #wanted-poster {
-            display: none;
+            display: block;
             background-color: rgba(0, 0, 0, 0.8);
             color: #f7d65b;
             font-size: 1.5rem;
@@ -103,8 +105,9 @@
         }
 
         #wanted-image {
-            width: 150px;
+            width: 200px;
             border-radius: 10px;
+            margin-top: 10px;
         }
 
         /* Captain of the Ship Message */
@@ -193,13 +196,11 @@
 
         <!-- Rumor Section -->
         <div class="rumor-bubble-container">
-            <!-- Pirate #1 (Downplaying) -->
             <div class="rumor-bubble">
                 <h3>Pirate #1:</h3>
                 <p>"Aye, ye heard about Joyboy? He ain't nothin' special. A boy with a smile and a big mouth. All this 'freedom' talk? Bah! He’s just a fool with a ship and a crew who’s always in danger. They say he’s ‘Captain’, but I reckon it’s just by luck he ain’t dead yet!"</p>
             </div>
 
-            <!-- Pirate #2 (Praising) -->
             <div class="rumor-bubble">
                 <h3>Pirate #2:</h3>
                 <p>"Aye, Joyboy’s the real deal. Free as the wind, and a true leader! I say ye wrong, mate. Joyboy’s no fool. His heart’s as big as the ocean, and his smile lights up the crew’s spirits. Not to mention, his strength, determination, and love for his mates make him a pirate like no other. Ye can’t fake that kind of freedom, mate!”</p>
@@ -217,7 +218,6 @@
 
     </div>
 
-    <!-- Script for interactivity -->
     <script>
         function toggleDetails(entryId) {
             var entry = document.getElementById(entryId);
@@ -233,7 +233,6 @@
             var wantedText = document.getElementById('wanted-text');
             var bountyAmount = document.getElementById('bounty-amount');
             
-            // Set the name and bounty amount when the poster is clicked
             wantedText.textContent = 'JOYBOY';  // Name in large text
             bountyAmount.textContent = 'Bounty: ?,???,???,??? GOLD';  // Bounty amount in red text
 
@@ -245,7 +244,6 @@
             poster.appendChild(message);
         }
 
-        // Leaflet map integration for pirate map
         var map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
