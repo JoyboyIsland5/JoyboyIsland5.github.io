@@ -89,104 +89,107 @@
             border-radius: 10px;
             border: 2px solid #f7d65b;
         }
+
+        /* WANTED Poster Styles */
+        #wanted-poster {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #f7d65b;
+            font-size: 1.5rem;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #wanted-image {
+            width: 150px;
+            border-radius: 10px;
+        }
+
+        /* Captain of the Ship Message */
+        #captain-message {
+            font-size: 2rem;
+            color: #f7d65b;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
     </style>
-    <!-- You can add a pirate font from Google Fonts or use a custom one -->
-    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="logbook-container">
-    <h1>Pirate Logbook</h1>
+    <div class="logbook-container">
+        <h1>Pirate Logbook</h1>
 
-    <div class="log-entry">
-        <h2>Track Release: "FRONTLINE!!!"</h2>
-        <p>Released on January 1, 2025. A song about overcoming life's struggles and staying resilient.</p>
-        <div class="log-details">
-            <p>This track dives deep into the challenges of pursuing your dreams against all odds. It showcases raw emotion and a drive to push forward, no matter the obstacles. Fans say it's a battle anthem!</p>
-            <a href="https://open.spotify.com/album/4y35XvwPefIN04ZjYVW2zq?si=4qx6TgdVQ72eV7-wQ2OsYA" target="_blank" style="color: #ffcc00;">Listen on Spotify</a>
+        <!-- Logbook Entries -->
+        <div class="log-entry" onclick="toggleDetails('entry1')">
+            <h2>Entry #1: Setting Sail</h2>
+            <p>A new journey begins as we set sail into the open sea.</p>
+            <div id="entry1" class="log-details">
+                <p>The winds are favorable, and the crew is ready. The horizon awaits!</p>
+            </div>
+        </div>
+
+        <div class="log-entry" onclick="toggleDetails('entry2')">
+            <h2>Entry #2: A Storm Approaches</h2>
+            <p>Dark clouds loom on the horizon. A storm is coming...</p>
+            <div id="entry2" class="log-details">
+                <p>The ship creaks under the pressure. The crew braces for impact!</p>
+            </div>
+        </div>
+
+        <!-- Pirate Ship Image -->
+        <img id="pirate-ship" src="ship.png" alt="Pirate Ship" onclick="shipClicked()">
+
+        <!-- Map -->
+        <div id="map"></div>
+
+        <!-- Captain of the Ship Message -->
+        <div id="captain-message">
+            I am the Captain of this Ship!
+        </div>
+
+        <!-- WANTED Poster -->
+        <div id="wanted-poster">
+            <img id="wanted-image" src="your-image.jpg" alt="Wanted Poster" onclick="showWantedPoster()">
+            <div>WANTED</div>
+            <div>DEAD OR ALIVE</div>
         </div>
     </div>
 
-    <div class="log-entry">
-        <h2>Track Release: "NEVERLAND!"</h2>
-        <p>Released on February 15, 2025. A dreamy escape into a world of freedom and possibility.</p>
-        <div class="log-details">
-            <p>"NEVERLAND!" is a metaphorical journey to a place where dreams and reality blur. It captures the essence of chasing freedom and living for the moment.</p>
-            <a href="https://on.soundcloud.com/mUKEbaqASEqYNtkr7" target="_blank" style="color: #ffcc00;">Listen on SoundCloud</a>
-        </div>
-    </div>
+    <!-- Script for interactivity -->
+    <script>
+        function toggleDetails(entryId) {
+            var entry = document.getElementById(entryId);
+            entry.style.display = entry.style.display === 'block' ? 'none' : 'block';
+        }
 
-    <div class="log-entry">
-        <h2>Track Release: "ADDICTED2LIVING!"</h2>
-        <p>Released on March 10, 2024. A reflection on living in the moment and embracing life to the fullest.</p>
-        <div class="log-details">
-            <p>This track explores the theme of living freely and unapologetically, with catchy beats and raw lyrics that speak to anyone who refuses to be tied down by life’s constraints.</p>
-            <a href="https://on.soundcloud.com/YMaHhSWdF4aTTi5LA" target="_blank" style="color: #ffcc00;">Listen on SoundCloud</a>
-        </div>
-    </div>
-    
-    <!-- Map Section -->
-    <div id="map"></div>
-    
-    <!-- Pirate Ship Image -->
-    <img id="pirate-ship" src="pirate-ship.png" alt="Pirate Ship" onclick="sailShip()">
-</div>
+        function shipClicked() {
+            document.getElementById('pirate-ship').style.transform = 'rotate(360deg)';
+            alert('Set sail for adventure!');
+        }
 
-<!-- Include Leaflet JS -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        function showWantedPoster() {
+            var poster = document.getElementById('wanted-poster');
+            var message = document.createElement('div');
+            message.textContent = 'Click the image for a reward!';
+            message.style.color = '#f7d65b';
+            message.style.fontSize = '1.2rem';
+            poster.appendChild(message);
+        }
 
-<script>
-// Initialize the map
-const map = L.map('map').setView([51.505, -0.09], 2); // Set the view to a global position (adjust as needed)
+        // Leaflet map integration for pirate map
+        var map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates
 
-// Set up OpenStreetMap as the tile layer
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-// Add markers for each track release
-const tracks = [
-    {
-        title: "FRONTLINE!!!",
-        description: "Released on January 1, 2025. A song about overcoming life's struggles.",
-        coordinates: [37.7749, -122.4194], // San Francisco (example)
-        link: "https://open.spotify.com/album/4y35XvwPefIN04ZjYVW2zq?si=4qx6TgdVQ72eV7-wQ2OsYA"
-    },
-    {
-        title: "NEVERLAND!",
-        description: "Released on February 15, 2025. A dreamy escape into freedom.",
-        coordinates: [40.7128, -74.0060], // New York (example)
-        link: "https://on.soundcloud.com/mUKEbaqASEqYNtkr7"
-    },
-    {
-        title: "ADDICTED2LIVING!",
-        description: "Released on March 10, 2024. A reflection on living freely.",
-        coordinates: [51.5074, -0.1278], // London (example)
-        link: "https://on.soundcloud.com/YMaHhSWdF4aTTi5LA"
-    }
-];
-
-// Loop through the tracks and add markers to the map
-tracks.forEach(track => {
-    L.marker(track.coordinates)
-        .addTo(map)
-        .bindPopup(`
-            <strong>${track.title}</strong><br>
-            ${track.description}<br>
-            <a href="${track.link}" target="_blank" style="color: #ffcc00;">Listen Now</a>
-        `);
-});
-
-// Pirate Ship Movement Function
-function sailShip() {
-    const ship = document.getElementById('pirate-ship');
-    ship.style.transform = "translateX(500px)"; // Moves ship to the right
-    setTimeout(() => {
-        alert("Arrr! The ship has sailed to a new location!");
-        ship.style.transform = "translateX(0)"; // Resets ship position after 2 seconds
-    }, 2000);
-}
-</script>
+        var marker = L.marker([51.5, -0.09]).addTo(map); // Example marker
+        marker.bindPopup("This is a location on your pirate map!").openPopup();
+    </script>
 
 </body>
 </html>
