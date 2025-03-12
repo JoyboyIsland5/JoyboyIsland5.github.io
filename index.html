@@ -11,7 +11,7 @@
         /* Pirate Logbook Themed Styles */
         body {
             font-family: 'Georgia', serif;
-            background-image: url('your-background-image.jpeg'); /* Ensure this file exists in your directory */
+            background-image: url('your-background-image.jpg'); /* Ensure this file exists in your directory */
             background-size: cover;
             background-position: center;
             color: #fff;
@@ -161,21 +161,27 @@
 
         <!-- Captain of the Ship Message -->
         <div id="captain-message">
-            The Captain!
+            I am the Captain of this Ship!
         </div>
 
         <!-- Rumor Bubbles -->
         <div class="rumor-bubble-container">
+            <!-- Pirate 1 (downplaying) -->
             <div class="rumor-bubble">
                 <h3>Rumor #1</h3>
-                <p>"They say Joyboy’s just a lucky fool who gets by with a smile. Not much of a captain, really."</p>
+                <p>"Aye, ye heard about Joyboy? He ain't nothin' special. A boy with a smile and a big mouth. All this 'freedom' talk? Bah! He’s just a fool with a ship and a crew who’s always in danger. They say he’s ‘Captain’, but I reckon it’s just by luck he ain’t dead yet!"</p>
             </div>
+
+            <!-- Pirate 2 (praising) -->
             <div class="rumor-bubble">
                 <h3>Rumor #2</h3>
-                <p>"Don’t listen to that nonsense! Joyboy’s the real deal! He’s got the heart of a true leader, never backs down, and always keeps his crew close."</p>
+                <p>"Oh, ye best be believin’ the tales of Joyboy! He’s a true free spirit! Never one to waver in his belief that freedom is the most important thing. Smiling through every storm, with a heart that keeps his crew together. That boy’s heart, it’s the size of the sea, and as for his bounty? It don’t matter, he’ll be the Pirate King, mark my words!"</p>
             </div>
         </div>
     </div>
+
+    <!-- Ship Creak Audio -->
+    <audio id="creak-audio" src="harbor.wav" preload="auto"></audio>
 
     <!-- Script for interactivity -->
     <script>
@@ -187,6 +193,10 @@
         function shipClicked() {
             document.getElementById('pirate-ship').style.transform = 'rotate(360deg)';
             alert('Set sail for adventure!');
+            
+            // Play ship creak sound when ship is clicked
+            var creakAudio = document.getElementById('creak-audio');
+            creakAudio.play();  // Play the audio
         }
 
         // Leaflet map integration for pirate map
