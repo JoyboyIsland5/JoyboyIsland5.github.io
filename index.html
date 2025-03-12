@@ -9,7 +9,7 @@
         /* Pirate Logbook Themed Styles */
         body {
             font-family: 'Georgia', serif;
-            background-image: url('your-background-image.png'); /* Update the background image path */
+            background-image: url('MAP.jpg'); /* Replaced with MAP.jpg */
             background-size: cover;
             background-position: center center;
             color: #fff;
@@ -171,18 +171,18 @@
 
         <!-- Logbook Entries -->
         <div class="log-entry" onclick="toggleDetails('entry1')">
-            <h2>Entry #1: Setting Sail</h2>
-            <p>A new journey begins as we set sail into the open sea.</p>
+            <h2>Entry #1: Picking Up My First Crewmate</h2>
+            <p>I picked up my first crewmate today. A tough one, a real fighter. With this one aboard, I feel ready to face whatever the sea throws at us!</p>
             <div id="entry1" class="log-details">
-                <p>The winds are favorable, and the crew is ready. The horizon awaits!</p>
+                <p>We met in a small tavern. He was strong and had a reputation for being quick with a sword. I offered him a place on my ship, and he accepted without hesitation. This is just the beginning.</p>
             </div>
         </div>
 
         <div class="log-entry" onclick="toggleDetails('entry2')">
-            <h2>Entry #2: A Storm Approaches</h2>
-            <p>Dark clouds loom on the horizon. A storm is coming...</p>
+            <h2>Entry #2: A Chef Joins the Crew</h2>
+            <p>Today, I found a chef willing to join my crew. A chef, you say? Yes, a pirate ship needs good food too!</p>
             <div id="entry2" class="log-details">
-                <p>The ship creaks under the pressure. The crew braces for impact!</p>
+                <p>He was working at a market, a bit of a quiet fellow, but he assured me that his cooking skills could lift the spirits of any crew. I’m sure our meals will be something to look forward to from now on!</p>
             </div>
         </div>
 
@@ -221,6 +221,9 @@
 
     </div>
 
+    <!-- Audio for Ship Click -->
+    <audio id="pirate-audio" src="harbor.wav"></audio>
+
     <script>
         function toggleDetails(entryId) {
             var entry = document.getElementById(entryId);
@@ -229,6 +232,7 @@
 
         function shipClicked() {
             document.getElementById('pirate-ship').style.transform = 'rotate(360deg)';
+            document.getElementById('pirate-audio').play(); // Play audio when ship is clicked
             alert('Set sail for adventure!');
         }
 
