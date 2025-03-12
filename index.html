@@ -9,9 +9,10 @@
         /* Pirate Logbook Themed Styles */
         body {
             font-family: 'Georgia', serif;
-            background-image: url('MAP.jpg'); /* Replaced with MAP.jpg */
-            background-size: cover;
-            background-position: center center;
+            background-image: url('MAP.jpg'); /* Updated with your MAP.jpg */
+            background-size: cover; /* Ensures the image covers the screen without stretching */
+            background-attachment: fixed; /* Keeps the background in place */
+            background-position: center center; /* Centers the image */
             color: #fff;
             margin: 0;
             padding: 20px;
@@ -19,10 +20,10 @@
         }
 
         .logbook-container {
-            max-width: 1000px;
+            max-width: 800px; /* Smaller size for logbook */
             margin: auto;
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 30px;
+            padding: 20px; /* Reduced padding */
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
             border: 5px solid #b38b4d;
@@ -30,37 +31,37 @@
 
         h1 {
             text-align: center;
-            font-size: 2.5rem; /* Reduced size */
+            font-size: 2.2rem; /* Smaller size */
             text-transform: uppercase;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-family: 'PirateFont', serif;
             color: #f7d65b;
         }
 
         .log-entry {
             background-color: rgba(0, 0, 0, 0.6);
-            padding: 15px; /* Reduced padding */
+            padding: 12px; /* Reduced padding */
             border-radius: 15px;
-            margin: 15px 0;
+            margin: 12px 0; /* Smaller margin */
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
             cursor: pointer;
         }
 
         .log-entry h2 {
             margin: 0;
-            font-size: 1.6rem; /* Reduced size */
+            font-size: 1.5rem; /* Smaller font size */
             color: #f7d65b;
         }
 
         .log-entry p {
             margin-top: 10px;
-            font-size: 0.9rem; /* Reduced size */
+            font-size: 0.85rem; /* Smaller font size */
         }
 
         .log-details {
             display: none;
             background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px;
+            padding: 8px;
             border-radius: 5px;
             margin-top: 10px;
         }
@@ -85,7 +86,7 @@
 
         /* Map Styles */
         #map {
-            height: 500px;
+            height: 400px; /* Reduced map size */
             margin-top: 20px;
             border-radius: 10px;
             border: 2px solid #f7d65b;
@@ -98,16 +99,16 @@
             background-color: rgba(0, 0, 0, 0.8);
             color: #f7d65b;
             font-size: 1.5rem;
-            padding: 30px; /* Increased padding */
+            padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
             text-align: center;
-            width: 50%; /* Increased width */
-            margin: 0 auto; /* Center the poster */
+            width: 50%;
+            margin: 0 auto;
         }
 
         #wanted-image {
-            width: 250px; /* Increased size */
+            width: 250px;
             border-radius: 10px;
             margin-top: 10px;
             cursor: pointer;
@@ -122,31 +123,18 @@
             margin-top: 30px;
         }
 
-        /* WANTED Text */
-        #wanted-text {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        #bounty-amount {
-            font-size: 3rem;
-            color: red;
-            margin-top: 20px;
-        }
-
         /* Rumor Bubbles */
         .rumor-bubble-container {
-            margin-top: 40px;
+            margin-top: 30px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
 
         .rumor-bubble {
             background-color: rgba(0, 0, 0, 0.7);
             color: #fff;
-            padding: 20px;
+            padding: 18px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
@@ -160,6 +148,21 @@
         .rumor-content {
             margin-top: 10px;
             font-size: 1rem;
+        }
+
+        /* Stop Audio Button */
+        #stop-audio-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
     </style>
@@ -179,10 +182,10 @@
         </div>
 
         <div class="log-entry" onclick="toggleDetails('entry2')">
-            <h2>Entry #2: A Chef Joins the Crew</h2>
-            <p>Today, I found a chef willing to join my crew. A chef, you say? Yes, a pirate ship needs good food too!</p>
+            <h2>Entry #2: A Funny Cook Joins the Crew</h2>
+            <p>Today, I found a chef willing to join my crew. He’s a funny cook, always telling jokes while cooking up the most delicious meals!</p>
             <div id="entry2" class="log-details">
-                <p>He was working at a market, a bit of a quiet fellow, but he assured me that his cooking skills could lift the spirits of any crew. I’m sure our meals will be something to look forward to from now on!</p>
+                <p>He was working at a market, a bit of a quiet fellow at first, but once he started cooking, he couldn’t stop cracking jokes. He assured me his cooking skills could lift the spirits of any crew. I’m sure our meals will be something to look forward to from now on!</p>
             </div>
         </div>
 
@@ -222,7 +225,7 @@
     </div>
 
     <!-- Audio for Ship Click -->
-    <audio id="pirate-audio" src="harbor.wav"></audio>
+    <audio id="pirate-audio" src="your-audio-file.mp3"></audio>
 
     <script>
         function toggleDetails(entryId) {
@@ -260,6 +263,16 @@
             clickCount++;
         }
 
+        // Stop Audio Function
+        function stopAudio() {
+            var audio = document.getElementById('pirate-audio');
+            audio.pause();
+            audio.currentTime = 0; // Reset the audio to the beginning
+        }
+
+        // Add event listener to the stop audio button
+        document.getElementById('stop-audio-btn').addEventListener('click', stopAudio);
+
         var map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -267,8 +280,10 @@
         }).addTo(map);
 
         var marker = L.marker([51.5, -0.09]).addTo(map); // Example marker
-        marker.bindPopup("This is a location on your pirate map!").openPopup();
+        marker.bindPopup("My Pirate Ship!").openPopup();
     </script>
 
+    <!-- Stop Audio Button -->
+    <button id="stop-audio-btn">Stop Audio</button>
 </body>
 </html>
