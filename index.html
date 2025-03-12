@@ -9,10 +9,10 @@
         /* Pirate Logbook Themed Styles */
         body {
             font-family: 'Georgia', serif;
-            background-image: url('PIRATEMAP.jpg'); /* Updated background image */
+            background-image: url('PIRATEMAP.jpg'); /* Keep the background as PIRATEMAP */
             background-size: cover;
             background-position: center center;
-            background-attachment: fixed; /* Prevent stretching */
+            background-attachment: fixed;
             color: #fff;
             margin: 0;
             padding: 20px;
@@ -20,10 +20,10 @@
         }
 
         .logbook-container {
-            max-width: 800px; /* Slightly smaller logbook */
+            max-width: 800px;
             margin: auto;
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 25px; /* Slightly reduced padding */
+            padding: 25px;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
             border: 5px solid #b38b4d;
@@ -31,7 +31,7 @@
 
         h1 {
             text-align: center;
-            font-size: 2.2rem; /* Slightly reduced font size */
+            font-size: 2.2rem;
             text-transform: uppercase;
             margin-bottom: 40px;
             font-family: 'PirateFont', serif;
@@ -79,15 +79,14 @@
             position: absolute;
             bottom: 30px;
             right: 50px;
-            width: 200px; /* Restricting the size */
-            height: auto; /* Maintain aspect ratio */
+            width: 200px;
             cursor: pointer;
             transition: transform 2s ease-in-out;
         }
 
         /* Map Styles */
         #map {
-            height: 400px;
+            height: 500px;
             margin-top: 20px;
             border-radius: 10px;
             border: 2px solid #f7d65b;
@@ -164,27 +163,32 @@
             font-size: 1rem;
         }
 
-        /* Audio Controls */
+        /* Audio Stop Button Styles */
         #audio-controls {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 10px;
             border-radius: 10px;
-            color: #f7d65b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #stop-button {
+            background-color: #f7d65b;
+            border: none;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
         }
 
     </style>
 </head>
 <body>
-
-    <!-- Background Audio -->
-    <audio id="background-audio" controls>
-        <source src="harbor.wav" type="audio/wav">
-        Your browser does not support the audio element.
-    </audio>
 
     <div class="logbook-container">
         <h1>Pirate Logbook</h1>
@@ -192,17 +196,17 @@
         <!-- Logbook Entries -->
         <div class="log-entry" onclick="toggleDetails('entry1')">
             <h2>Entry #1: Picking Up My First Crewmate</h2>
-            <p>I’ve found a reliable sailor! We set off together to the high seas!</p>
+            <p>I picked up my first crewmate today. A tough one, a real fighter. With this one aboard, I feel ready to face whatever the sea throws at us!</p>
             <div id="entry1" class="log-details">
-                <p>The winds are favorable, and the crew is ready. The horizon awaits!</p>
+                <p>We met in a small tavern. He was strong and had a reputation for being quick with a sword. I offered him a place on my ship, and he accepted without hesitation. This is just the beginning.</p>
             </div>
         </div>
 
         <div class="log-entry" onclick="toggleDetails('entry2')">
-            <h2>Entry #2: A Funny Chef Joins the Crew</h2>
-            <p>A funny cook joined our crew today! He’s got a strange way of making meals, but they always taste amazing.</p>
+            <h2>Entry #2: A Funny Cook Joins the Crew</h2>
+            <p>Today, I found a chef willing to join my crew. He’s a funny cook, always telling jokes while cooking up the most delicious meals!</p>
             <div id="entry2" class="log-details">
-                <p>The crew is laughing non-stop at his jokes, and his food is to die for!</p>
+                <p>He was working at a market, a bit of a quiet fellow at first, but once he started cooking, he couldn’t stop cracking jokes. He assured me his cooking skills could lift the spirits of any crew. I’m sure our meals will be something to look forward to from now on!</p>
             </div>
         </div>
 
@@ -217,67 +221,49 @@
             The Captain
         </div>
 
-        <!-- Rumor Section -->
-        <div class="rumor-bubble-container">
-            <div class="rumor-bubble">
-                <h3>Pirate #1:</h3>
-                <p>"Aye, ye heard about Joyboy? He ain't nothin' special. A boy with a smile and a big mouth. All this 'freedom' talk? Bah! He’s just a fool with a ship and a crew who’s always in danger. They say he’s ‘Captain’, but I reckon it’s just by luck he ain’t dead yet!"</p>
-            </div>
-
-            <div class="rumor-bubble">
-                <h3>Pirate #2:</h3>
-                <p>"Aye, Joyboy’s the real deal. Free as the wind, and a true leader! I say ye wrong, mate. Joyboy’s no fool. His heart’s as big as the ocean, and his smile lights up the crew’s spirits. Not to mention, his strength, determination, and love for his mates make him a pirate like no other. Ye can’t fake that kind of freedom, mate!”</p>
-            </div>
-        </div>
-
         <!-- WANTED Poster -->
         <div id="wanted-poster">
             <img id="wanted-image" src="your-image.png" alt="Wanted Poster" onclick="showWantedPoster()">
             <div>WANTED</div>
             <div>DEAD OR ALIVE</div>
-            <div id="wanted-text">Click for rewards</div>
+            <div id="wanted-text"></div>
             <div id="bounty-amount"></div>
         </div>
 
     </div>
 
+    <!-- Audio Controls -->
+    <div id="audio-controls">
+        <button id="stop-button" onclick="stopAudio()">Stop Audio</button>
+    </div>
+
     <script>
-        // Function to toggle the details of each log entry
+        // Logbook Entry Toggle
         function toggleDetails(entryId) {
             var entry = document.getElementById(entryId);
             entry.style.display = entry.style.display === 'block' ? 'none' : 'block';
         }
 
-        // Function to handle the pirate ship click event
+        // Pirate Ship Click Animation
         function shipClicked() {
             document.getElementById('pirate-ship').style.transform = 'rotate(360deg)';
-            document.getElementById('background-audio').play(); // Start audio when the ship is clicked
+            playAudio();
             alert('Set sail for adventure!');
         }
 
-        // Function for showing wanted poster details
-        let clickCount = 0;
-        function showWantedPoster() {
-            var wantedText = document.getElementById('wanted-text');
-            var bountyAmount = document.getElementById('bounty-amount');
-            
-            if (clickCount === 0) {
-                wantedText.textContent = 'JOYBOY'; // Name in large text
-                bountyAmount.textContent = 'Bounty: ?,???,???,??? GOLD'; // Bounty amount in red text
-
-                var poster = document.getElementById('wanted-poster');
-                var message = document.createElement('div');
-                message.textContent = 'Click the image for a reward!';
-                message.style.color = '#f7d65b';
-                message.style.fontSize = '1.2rem';
-                poster.appendChild(message);
-            }
-
-            alert("MEAT!!!");
-            clickCount++;
+        // Play Audio when Pirate Ship is clicked
+        var audio = new Audio('harbor.wav');
+        function playAudio() {
+            audio.play();
         }
 
-        // Initialize the map using Leaflet.js
+        // Stop Audio
+        function stopAudio() {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+
+        // Map Initialization
         var map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -286,6 +272,30 @@
 
         var marker = L.marker([51.5, -0.09]).addTo(map); // Example marker
         marker.bindPopup("This is a location on your pirate map!").openPopup();
+
+        // Bounty Poster Interaction
+        let clickCount = 0;
+        function showWantedPoster() {
+            var wantedText = document.getElementById('wanted-text');
+            var bountyAmount = document.getElementById('bounty-amount');
+            
+            wantedText.textContent = 'JOYBOY';  // Name in large text
+            bountyAmount.textContent = 'Bounty: ?,???,???,??? GOLD';  // Bounty amount in red text
+
+            // Add message for the poster click
+            if (clickCount === 0) {
+                var poster = document.getElementById('wanted-poster');
+                var message = document.createElement('div');
+                message.textContent = 'Click the image for a reward!';
+                message.style.color = '#f7d65b';
+                message.style.fontSize = '1.2rem';
+                poster.appendChild(message);
+            }
+
+            // Change message on every click
+            alert("MEAT");
+            clickCount++;
+        }
     </script>
 
 </body>
