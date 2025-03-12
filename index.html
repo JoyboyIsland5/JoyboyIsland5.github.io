@@ -9,7 +9,7 @@
         /* Pirate Logbook Themed Styles */
         body {
             font-family: 'Georgia', serif; /* A more pirate-like font */
-            background-image: url('parchment.png'); /* Background image simulating parchment paper */
+            background-image: url('your-background-image.png'); /* Updated to your background image */
             background-size: cover;
             color: #fff;
             margin: 0;
@@ -205,6 +205,16 @@
                 <p>"Aye, Joyboy’s the real deal. Free as the wind, and a true leader! I say ye wrong, mate. Joyboy’s no fool. His heart’s as big as the ocean, and his smile lights up the crew’s spirits. Not to mention, his strength, determination, and love for his mates make him a pirate like no other. Ye can’t fake that kind of freedom, mate!”</p>
             </div>
         </div>
+
+        <!-- WANTED Poster -->
+        <div id="wanted-poster">
+            <img id="wanted-image" src="your-image.png" alt="Wanted Poster" onclick="showWantedPoster()">
+            <div>WANTED</div>
+            <div>DEAD OR ALIVE</div>
+            <div id="wanted-text"></div>
+            <div id="bounty-amount"></div>
+        </div>
+
     </div>
 
     <!-- Script for interactivity -->
@@ -217,6 +227,22 @@
         function shipClicked() {
             document.getElementById('pirate-ship').style.transform = 'rotate(360deg)';
             alert('Set sail for adventure!');
+        }
+
+        function showWantedPoster() {
+            var wantedText = document.getElementById('wanted-text');
+            var bountyAmount = document.getElementById('bounty-amount');
+            
+            // Set the name and bounty amount when the poster is clicked
+            wantedText.textContent = 'JOYBOY';  // Name in large text
+            bountyAmount.textContent = 'Bounty: ?,???,???,??? GOLD';  // Bounty amount in red text
+
+            var poster = document.getElementById('wanted-poster');
+            var message = document.createElement('div');
+            message.textContent = 'Click the image for a reward!';
+            message.style.color = '#f7d65b';
+            message.style.fontSize = '1.2rem';
+            poster.appendChild(message);
         }
 
         // Leaflet map integration for pirate map
