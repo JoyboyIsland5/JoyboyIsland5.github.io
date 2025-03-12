@@ -8,8 +8,8 @@
     <style>
         /* Pirate Logbook Themed Styles */
         body {
-            font-family: 'Georgia', serif; /* A more pirate-like font */
-            background-image: url('parchment.jpg'); /* Background image simulating parchment paper */
+            font-family: 'Georgia', serif; /* Pirate-like font */
+            background-image: url('parchment.jpg'); /* Parchment background */
             background-size: cover;
             color: #fff;
             margin: 0;
@@ -24,7 +24,7 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            border: 5px solid #b38b4d; /* Gold-like border for a pirate theme */
+            border: 5px solid #b38b4d; /* Gold border for pirate theme */
         }
 
         h1 {
@@ -32,10 +32,10 @@
             font-size: 3rem;
             text-transform: uppercase;
             margin-bottom: 40px;
-            font-family: 'PirateFont', serif; /* Custom Pirate font */
-            color: #f7d65b;
+            color: #f7d65b; /* Pirate yellow color */
         }
 
+        /* Log Entry Styles */
         .log-entry {
             background-color: rgba(0, 0, 0, 0.6);
             padding: 20px;
@@ -192,7 +192,7 @@
             
             // Set the name and bounty amount when the poster is clicked
             wantedText.textContent = 'JOYBOY';  // Name in large text
-            bountyAmount.textContent = 'Bounty: ?,???,???,??? GOLD';  // Bounty amount in red text
+            bountyAmount.textContent = 'Bounty: 10,000,000 GOLD';  // Bounty amount in red text
 
             var poster = document.getElementById('wanted-poster');
             var message = document.createElement('div');
@@ -200,6 +200,7 @@
             message.style.color = '#f7d65b';
             message.style.fontSize = '1.2rem';
             poster.appendChild(message);
+            poster.style.display = 'block'; // Ensure the poster becomes visible when clicked
         }
 
         // Leaflet map integration for pirate map
