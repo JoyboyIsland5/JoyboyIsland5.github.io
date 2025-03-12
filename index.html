@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pirate Logbook with Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>Pirate Logbook</title>
     <style>
         /* Pirate Logbook Themed Styles */
         body {
@@ -84,15 +83,6 @@
             transition: transform 2s ease-in-out;
         }
 
-        /* Map Styles */
-        #map {
-            height: 500px;
-            margin-top: 20px;
-            border-radius: 10px;
-            border: 2px solid #f7d65b;
-            width: 100%;
-        }
-
         /* WANTED Poster Styles */
         #wanted-poster {
             display: block;
@@ -134,33 +124,6 @@
             font-size: 3rem;
             color: red;
             margin-top: 20px;
-        }
-
-        /* Rumor Bubbles */
-        .rumor-bubble-container {
-            margin-top: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .rumor-bubble {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-
-        .rumor-bubble h3 {
-            margin: 0;
-            font-size: 1.8rem;
-            color: #f7d65b;
-        }
-
-        .rumor-content {
-            margin-top: 10px;
-            font-size: 1rem;
         }
 
         /* Audio Stop Button Styles */
@@ -213,9 +176,6 @@
         <!-- Pirate Ship Image -->
         <img id="pirate-ship" src="STRAWHAT.png" alt="Pirate Ship" onclick="shipClicked()">
 
-        <!-- Map -->
-        <div id="map"></div>
-
         <!-- Captain of the Ship Message -->
         <div id="captain-message">
             The Captain
@@ -262,16 +222,6 @@
             audio.pause();
             audio.currentTime = 0;
         }
-
-        // Map Initialization
-        var map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        var marker = L.marker([51.5, -0.09]).addTo(map); // Example marker
-        marker.bindPopup("This is a location on your pirate map!").openPopup();
 
         // Bounty Poster Interaction
         let clickCount = 0;
