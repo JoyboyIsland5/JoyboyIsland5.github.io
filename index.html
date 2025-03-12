@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pirate Logbook - The Adventures of Joyboy</title>
-    <!-- Leaflet CSS for map integration -->
+    <title>Pirate Logbook with Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         /* Pirate Logbook Themed Styles */
         body {
-            font-family: 'Georgia', serif;
-            background-image: url('your-background-image.jpg'); /* Ensure this file exists in your directory */
+            font-family: 'Georgia', serif; /* A more pirate-like font */
+            background-image: url('parchment.png'); /* Background image simulating parchment paper */
             background-size: cover;
-            background-position: center;
             color: #fff;
             margin: 0;
             padding: 20px;
@@ -93,6 +90,23 @@
             border: 2px solid #f7d65b;
         }
 
+        /* WANTED Poster Styles */
+        #wanted-poster {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #f7d65b;
+            font-size: 1.5rem;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #wanted-image {
+            width: 150px;
+            border-radius: 10px;
+        }
+
         /* Captain of the Ship Message */
         #captain-message {
             font-size: 2rem;
@@ -102,11 +116,25 @@
             margin-top: 30px;
         }
 
-        /* Rumors Bubbles */
+        /* WANTED Text */
+        #wanted-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #bounty-amount {
+            font-size: 3rem;
+            color: red;
+            margin-top: 20px;
+        }
+
+        /* Rumor Bubbles */
         .rumor-bubble-container {
+            margin-top: 40px;
             display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .rumor-bubble {
@@ -114,27 +142,26 @@
             color: #fff;
             padding: 20px;
             border-radius: 10px;
-            width: 45%;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
         .rumor-bubble h3 {
-            font-size: 1.5rem;
+            margin: 0;
+            font-size: 1.8rem;
             color: #f7d65b;
         }
 
-        .rumor-bubble p {
-            font-size: 1.2rem;
+        .rumor-content {
             margin-top: 10px;
+            font-size: 1rem;
         }
 
     </style>
 </head>
-
 <body>
 
     <div class="logbook-container">
-        <h1>Pirate Logbook - The Adventures of Joyboy</h1>
+        <h1>Pirate Logbook</h1>
 
         <!-- Logbook Entries -->
         <div class="log-entry" onclick="toggleDetails('entry1')">
@@ -154,7 +181,7 @@
         </div>
 
         <!-- Pirate Ship Image -->
-        <img id="pirate-ship" src="ship.jpeg" alt="Pirate Ship" onclick="shipClicked()">
+        <img id="pirate-ship" src="ship.png" alt="Pirate Ship" onclick="shipClicked()">
 
         <!-- Map -->
         <div id="map"></div>
@@ -164,24 +191,21 @@
             I am the Captain of this Ship!
         </div>
 
-        <!-- Rumor Bubbles -->
+        <!-- Rumor Section -->
         <div class="rumor-bubble-container">
-            <!-- Pirate 1 (downplaying) -->
+            <!-- Pirate #1 (Downplaying) -->
             <div class="rumor-bubble">
-                <h3>Rumor #1</h3>
+                <h3>Pirate #1:</h3>
                 <p>"Aye, ye heard about Joyboy? He ain't nothin' special. A boy with a smile and a big mouth. All this 'freedom' talk? Bah! He’s just a fool with a ship and a crew who’s always in danger. They say he’s ‘Captain’, but I reckon it’s just by luck he ain’t dead yet!"</p>
             </div>
 
-            <!-- Pirate 2 (praising) -->
+            <!-- Pirate #2 (Praising) -->
             <div class="rumor-bubble">
-                <h3>Rumor #2</h3>
-                <p>"Oh, ye best be believin’ the tales of Joyboy! He’s a true free spirit! Never one to waver in his belief that freedom is the most important thing. Smiling through every storm, with a heart that keeps his crew together. That boy’s heart, it’s the size of the sea, and as for his bounty? It don’t matter, he’ll be the Pirate King, mark my words!"</p>
+                <h3>Pirate #2:</h3>
+                <p>"Aye, Joyboy’s the real deal. Free as the wind, and a true leader! I say ye wrong, mate. Joyboy’s no fool. His heart’s as big as the ocean, and his smile lights up the crew’s spirits. Not to mention, his strength, determination, and love for his mates make him a pirate like no other. Ye can’t fake that kind of freedom, mate!”</p>
             </div>
         </div>
     </div>
-
-    <!-- Ship Creak Audio -->
-    <audio id="creak-audio" src="harbor.wav" preload="auto"></audio>
 
     <!-- Script for interactivity -->
     <script>
@@ -193,10 +217,6 @@
         function shipClicked() {
             document.getElementById('pirate-ship').style.transform = 'rotate(360deg)';
             alert('Set sail for adventure!');
-            
-            // Play ship creak sound when ship is clicked
-            var creakAudio = document.getElementById('creak-audio');
-            creakAudio.play();  // Play the audio
         }
 
         // Leaflet map integration for pirate map
@@ -211,5 +231,4 @@
     </script>
 
 </body>
-
 </html>
