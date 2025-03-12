@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pirate Logbook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1d1d1d;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .logbook-container {
+            max-width: 1000px;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .log-entry {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .log-entry h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .log-entry p {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .log-details {
+            display: none;
+            background-color: #444;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .log-entry:hover {
+            background-color: #555;
+        }
+
+        .log-entry:hover .log-details {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="logbook-container">
+    <h1>Pirate Logbook</h1>
+
+    <div class="log-entry">
+        <h2>Track Release: "FRONTLINE!!!"</h2>
+        <p>Released on January 1, 2025. A song about overcoming life's struggles and staying resilient.</p>
+        <div class="log-details">
+            <p>This track dives deep into the challenges of pursuing your dreams against all odds. It showcases raw emotion and a drive to push forward, no matter the obstacles. Fans say it's a battle anthem!</p>
+            <a href="https://open.spotify.com/album/4y35XvwPefIN04ZjYVW2zq?si=4qx6TgdVQ72eV7-wQ2OsYA" target="_blank" style="color: #ffcc00;">Listen on Spotify</a>
+        </div>
+    </div>
+
+    <div class="log-entry">
+        <h2>Track Release: "NEVERLAND!"</h2>
+        <p>Released on February 15, 2025. A dreamy escape into a world of freedom and possibility.</p>
+        <div class="log-details">
+            <p>"NEVERLAND!" is a metaphorical journey to a place where dreams and reality blur. It captures the essence of chasing freedom and living for the moment.</p>
+            <a href="https://on.soundcloud.com/mUKEbaqASEqYNtkr7" target="_blank" style="color: #ffcc00;">Listen on SoundCloud</a>
+        </div>
+    </div>
+
+    <div class="log-entry">
+        <h2>Track Release: "ADDICTED2LIVING!"</h2>
+        <p>Released on March 10, 2024. A reflection on living in the moment and embracing life to the fullest.</p>
+        <div class="log-details">
+            <p>This track explores the theme of living freely and unapologetically, with catchy beats and raw lyrics that speak to anyone who refuses to be tied down by life’s constraints.</p>
+            <a href="https://on.soundcloud.com/YMaHhSWdF4aTTi5LA" target="_blank" style="color: #ffcc00;">Listen on SoundCloud</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Add interactivity for toggling log details
+    const logEntries = document.querySelectorAll('.log-entry');
+    logEntries.forEach(entry => {
+        entry.addEventListener('click', () => {
+            const details = entry.querySelector('.log-details');
+            details.style.display = details.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+</script>
+
+</body>
+</html>
