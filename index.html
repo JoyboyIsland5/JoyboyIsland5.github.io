@@ -116,6 +116,19 @@
             margin-top: 30px;
         }
 
+        /* WANTED Text */
+        #wanted-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #bounty-amount {
+            font-size: 3rem;
+            color: red;
+            margin-top: 20px;
+        }
+
     </style>
 </head>
 <body>
@@ -153,9 +166,11 @@
 
         <!-- WANTED Poster -->
         <div id="wanted-poster">
-            <img id="wanted-image" src="your-image.jpg" alt="Wanted Poster" onclick="showWantedPoster()">
+            <img id="wanted-image" src="your-image.jpeg" alt="Wanted Poster" onclick="showWantedPoster()">
             <div>WANTED</div>
             <div>DEAD OR ALIVE</div>
+            <div id="wanted-text"></div>
+            <div id="bounty-amount"></div>
         </div>
     </div>
 
@@ -172,6 +187,13 @@
         }
 
         function showWantedPoster() {
+            var wantedText = document.getElementById('wanted-text');
+            var bountyAmount = document.getElementById('bounty-amount');
+            
+            // Set the name and bounty amount when the poster is clicked
+            wantedText.textContent = 'JOYBOY';  // Name in large text
+            bountyAmount.textContent = 'Bounty: ?,???,???,??? GOLD';  // Bounty amount in red text
+
             var poster = document.getElementById('wanted-poster');
             var message = document.createElement('div');
             message.textContent = 'Click the image for a reward!';
