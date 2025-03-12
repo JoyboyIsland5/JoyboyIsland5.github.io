@@ -6,13 +6,11 @@
     <title>Pirate Logbook with Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        /* Pirate Logbook Themed Styles */
         body {
             font-family: 'Georgia', serif;
-            background-image: url('MAP.jpg'); /* Updated with your MAP.jpg */
-            background-size: cover; /* Ensures the image covers the screen without stretching */
-            background-attachment: fixed; /* Keeps the background in place */
-            background-position: center center; /* Centers the image */
+            background-image: url('MAP.jpg');
+            background-size: cover;
+            background-position: center center;
             color: #fff;
             margin: 0;
             padding: 20px;
@@ -20,10 +18,10 @@
         }
 
         .logbook-container {
-            max-width: 800px; /* Smaller size for logbook */
+            max-width: 1000px;
             margin: auto;
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px; /* Reduced padding */
+            padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
             border: 5px solid #b38b4d;
@@ -31,259 +29,130 @@
 
         h1 {
             text-align: center;
-            font-size: 2.2rem; /* Smaller size */
+            font-size: 2.5rem;
             text-transform: uppercase;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             font-family: 'PirateFont', serif;
             color: #f7d65b;
         }
 
-        .log-entry {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 12px; /* Reduced padding */
-            border-radius: 15px;
-            margin: 12px 0; /* Smaller margin */
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        #pirate-flag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 150px;
+            animation: wave 2s infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        #ship-wheel {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 120px;
             cursor: pointer;
         }
 
-        .log-entry h2 {
-            margin: 0;
-            font-size: 1.5rem; /* Smaller font size */
-            color: #f7d65b;
-        }
-
-        .log-entry p {
-            margin-top: 10px;
-            font-size: 0.85rem; /* Smaller font size */
-        }
-
-        .log-details {
-            display: none;
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 8px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
-        .log-entry:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        .log-entry:hover .log-details {
-            display: block;
-        }
-
-        /* Pirate Ship Interactive Styles */
-        #pirate-ship {
+        #pirate-cannon {
             position: absolute;
             bottom: 30px;
-            right: 50px;
-            width: 200px;
+            left: 30px;
+            width: 120px;
             cursor: pointer;
-            transition: transform 2s ease-in-out;
         }
 
-        /* Map Styles */
         #map {
-            height: 400px; /* Reduced map size */
-            margin-top: 20px;
-            border-radius: 10px;
-            border: 2px solid #f7d65b;
+            height: 400px;
             width: 100%;
-        }
-
-        /* WANTED Poster Styles */
-        #wanted-poster {
-            display: block;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: #f7d65b;
-            font-size: 1.5rem;
-            padding: 20px;
-            border-radius: 10px;
             margin-top: 20px;
-            text-align: center;
-            width: 50%;
-            margin: 0 auto;
-        }
-
-        #wanted-image {
-            width: 250px;
             border-radius: 10px;
-            margin-top: 10px;
-            cursor: pointer;
         }
 
-        /* Captain of the Ship Message */
-        #captain-message {
-            font-size: 2rem;
-            color: #f7d65b;
-            text-align: center;
-            font-weight: bold;
-            margin-top: 30px;
-        }
-
-        /* Rumor Bubbles */
-        .rumor-bubble-container {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .rumor-bubble {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 18px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-
-        .rumor-bubble h3 {
-            margin: 0;
-            font-size: 1.8rem;
-            color: #f7d65b;
-        }
-
-        .rumor-content {
-            margin-top: 10px;
-            font-size: 1rem;
-        }
-
-        /* Stop Audio Button */
-        #stop-audio-btn {
+        /* Audio Controls */
+        #audio-controls {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 15px;
-            font-size: 1rem;
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 10px;
+            color: #f7d65b;
         }
 
     </style>
 </head>
 <body>
 
+    <!-- Background Audio -->
+    <audio id="background-audio" autoplay loop>
+        <source src="harbor.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
     <div class="logbook-container">
         <h1>Pirate Logbook</h1>
 
         <!-- Logbook Entries -->
-        <div class="log-entry" onclick="toggleDetails('entry1')">
+        <div class="log-entry">
             <h2>Entry #1: Picking Up My First Crewmate</h2>
-            <p>I picked up my first crewmate today. A tough one, a real fighter. With this one aboard, I feel ready to face whatever the sea throws at us!</p>
-            <div id="entry1" class="log-details">
-                <p>We met in a small tavern. He was strong and had a reputation for being quick with a sword. I offered him a place on my ship, and he accepted without hesitation. This is just the beginning.</p>
-            </div>
+            <p>I’ve found a reliable sailor! We set off together to the high seas!</p>
         </div>
 
-        <div class="log-entry" onclick="toggleDetails('entry2')">
-            <h2>Entry #2: A Funny Cook Joins the Crew</h2>
-            <p>Today, I found a chef willing to join my crew. He’s a funny cook, always telling jokes while cooking up the most delicious meals!</p>
-            <div id="entry2" class="log-details">
-                <p>He was working at a market, a bit of a quiet fellow at first, but once he started cooking, he couldn’t stop cracking jokes. He assured me his cooking skills could lift the spirits of any crew. I’m sure our meals will be something to look forward to from now on!</p>
-            </div>
+        <div class="log-entry">
+            <h2>Entry #2: A Funny Chef Joins the Crew</h2>
+            <p>A funny cook joined our crew today! He’s got a strange way of making meals, but they always taste amazing.</p>
         </div>
 
-        <!-- Pirate Ship Image (Updated to STRAWHAT.png) -->
-        <img id="pirate-ship" src="STRAWHAT.png" alt="Pirate Ship" onclick="shipClicked()">
+        <!-- Pirate Wheel -->
+        <img src="ship-wheel.png" alt="Ship Wheel" id="ship-wheel" onclick="rotateWheel()">
+
+        <!-- Pirate Cannon -->
+        <img src="cannon.png" alt="Pirate Cannon" id="pirate-cannon" onclick="fireCannon()">
 
         <!-- Map -->
         <div id="map"></div>
 
-        <!-- Captain of the Ship Message -->
-        <div id="captain-message">
-            The Captain
-        </div>
-
-        <!-- Rumor Section -->
-        <div class="rumor-bubble-container">
-            <div class="rumor-bubble">
-                <h3>Pirate #1:</h3>
-                <p>"Aye, ye heard about Joyboy? He ain't nothin' special. A boy with a smile and a big mouth. All this 'freedom' talk? Bah! He’s just a fool with a ship and a crew who’s always in danger. They say he’s ‘Captain’, but I reckon it’s just by luck he ain’t dead yet!"</p>
-            </div>
-
-            <div class="rumor-bubble">
-                <h3>Pirate #2:</h3>
-                <p>"Aye, Joyboy’s the real deal. Free as the wind, and a true leader! I say ye wrong, mate. Joyboy’s no fool. His heart’s as big as the ocean, and his smile lights up the crew’s spirits. Not to mention, his strength, determination, and love for his mates make him a pirate like no other. Ye can’t fake that kind of freedom, mate!”</p>
-            </div>
-        </div>
-
-        <!-- WANTED Poster -->
-        <div id="wanted-poster">
-            <img id="wanted-image" src="your-image.png" alt="Wanted Poster" onclick="showWantedPoster()">
-            <div>WANTED</div>
-            <div>DEAD OR ALIVE</div>
-            <div id="wanted-text"></div>
-            <div id="bounty-amount"></div>
+        <!-- Audio Controls (Stop Audio Button) -->
+        <div id="audio-controls">
+            <button onclick="stopAudio()">Stop Audio</button>
         </div>
 
     </div>
 
-    <!-- Audio for Ship Click -->
-    <audio id="pirate-audio" src="your-audio-file.mp3"></audio>
-
     <script>
-        function toggleDetails(entryId) {
-            var entry = document.getElementById(entryId);
-            entry.style.display = entry.style.display === 'block' ? 'none' : 'block';
+        // Rotate the Ship Wheel
+        function rotateWheel() {
+            document.getElementById('ship-wheel').style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
         }
 
-        function shipClicked() {
-            document.getElementById('pirate-ship').style.transform = 'rotate(360deg)';
-            document.getElementById('pirate-audio').play(); // Play audio when ship is clicked
-            alert('Set sail for adventure!');
-        }
-
-        let clickCount = 0;
-
-        function showWantedPoster() {
-            var wantedText = document.getElementById('wanted-text');
-            var bountyAmount = document.getElementById('bounty-amount');
-            
-            wantedText.textContent = 'JOYBOY';  // Name in large text
-            bountyAmount.textContent = 'Bounty: ?,???,???,??? GOLD';  // Bounty amount in red text
-
-            // Add message for the poster click
-            if (clickCount === 0) {
-                var poster = document.getElementById('wanted-poster');
-                var message = document.createElement('div');
-                message.textContent = 'Click the image for a reward!';
-                message.style.color = '#f7d65b';
-                message.style.fontSize = '1.2rem';
-                poster.appendChild(message);
-            }
-
-            // Change message on every click
-            alert("MEAT");
-            clickCount++;
+        // Pirate Cannon Click Event
+        function fireCannon() {
+            alert("Boom! The cannon fires!");
         }
 
         // Stop Audio Function
         function stopAudio() {
-            var audio = document.getElementById('pirate-audio');
-            audio.pause();
-            audio.currentTime = 0; // Reset the audio to the beginning
+            var audio = document.getElementById('background-audio');
+            audio.pause();  // Stop the audio
         }
 
-        // Add event listener to the stop audio button
-        document.getElementById('stop-audio-btn').addEventListener('click', stopAudio);
-
-        var map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates
+        // Initialize the Map using Leaflet.js
+        var map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates, change as needed
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
         var marker = L.marker([51.5, -0.09]).addTo(map); // Example marker
-        marker.bindPopup("My Pirate Ship!").openPopup();
+        marker.bindPopup("This is a location on your pirate map!").openPopup();
+
     </script>
 
-    <!-- Stop Audio Button -->
-    <button id="stop-audio-btn">Stop Audio</button>
 </body>
 </html>
