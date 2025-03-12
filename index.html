@@ -1,105 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pirate Rumors about the Captain</title>
+    <title>Pirate Logbook - The Adventures of Joyboy</title>
+    <!-- Leaflet CSS for map integration -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        /* Pirate Logbook Themed Styles */
         body {
             font-family: 'Georgia', serif;
-            background-image: url('parchment.jpg');
+            background-image: url('your-background-image.jpeg'); /* Ensure this file exists in your directory */
             background-size: cover;
+            background-position: center;
             color: #fff;
+            margin: 0;
             padding: 20px;
             font-size: 18px;
         }
 
-        .rumor-container {
-            max-width: 900px;
+        .logbook-container {
+            max-width: 1000px;
             margin: auto;
             background-color: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 15px;
-            border: 5px solid #b38b4d; /* Pirate gold color */
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            border: 5px solid #b38b4d; /* Gold-like border for a pirate theme */
         }
 
         h1 {
             text-align: center;
             font-size: 3rem;
-            color: #f7d65b;
             text-transform: uppercase;
             margin-bottom: 40px;
-        }
-
-        .rumor-bubble {
-            background-color: rgba(0, 0, 0, 0.8);
+            font-family: 'PirateFont', serif; /* Custom Pirate font */
             color: #f7d65b;
-            font-size: 1.3rem;
-            border-radius: 10px;
+        }
+
+        .log-entry {
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 20px;
-            margin: 20px 0;
+            border-radius: 15px;
+            margin: 15px 0;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
             cursor: pointer;
-            border: 3px solid #b38b4d;
-            transition: all 0.3s ease;
         }
 
-        .rumor-bubble:hover {
-            background-color: rgba(0, 0, 0, 1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        .log-entry h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #f7d65b;
         }
 
-        .rumor-content {
+        .log-entry p {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .log-details {
             display: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
             margin-top: 10px;
         }
 
-        .rumor-1, .rumor-2 {
+        .log-entry:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .log-entry:hover .log-details {
+            display: block;
+        }
+
+        /* Pirate Ship Interactive Styles */
+        #pirate-ship {
+            position: absolute;
+            bottom: 30px;
+            right: 50px;
+            width: 100px;
+            cursor: pointer;
+            transition: transform 2s ease-in-out;
+        }
+
+        /* Map Styles */
+        #map {
+            height: 500px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 2px solid #f7d65b;
+        }
+
+        /* Captain of the Ship Message */
+        #captain-message {
+            font-size: 2rem;
+            color: #f7d65b;
+            text-align: center;
             font-weight: bold;
+            margin-top: 30px;
+        }
+
+        /* Rumors Bubbles */
+        .rumor-bubble-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .rumor-bubble {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 45%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .rumor-bubble h3 {
+            font-size: 1.5rem;
             color: #f7d65b;
         }
 
-        .rumor-1 {
-            color: #ff0000; /* Downplaying pirate */
+        .rumor-bubble p {
+            font-size: 1.2rem;
+            margin-top: 10px;
         }
 
-        .rumor-2 {
-            color: #00ff00; /* Praising pirate */
-        }
-        
     </style>
 </head>
+
 <body>
 
-    <div class="rumor-container">
-        <h1>Pirate Rumors about the Captain</h1>
+    <div class="logbook-container">
+        <h1>Pirate Logbook - The Adventures of Joyboy</h1>
 
-        <!-- Rumor Bubble 1 - Downplaying the Captain's Achievements -->
-        <div class="rumor-bubble" onclick="toggleRumorContent('rumor1')">
-            <div class="rumor-1">Pirate #1: "Ah, that Joyboy? He's nothing special. Heard he only became a captain 'cause of luck!"</div>
-            <div id="rumor1" class="rumor-content">
-                <p>“Aye, ye heard it right. Joyboy’s always grinnin’ like a fool, but he doesn’t know what real piracy is! He just got lucky with his crew and maybe a little bit of magic, but he's no real threat on the seas!”</p>
+        <!-- Logbook Entries -->
+        <div class="log-entry" onclick="toggleDetails('entry1')">
+            <h2>Entry #1: Setting Sail</h2>
+            <p>A new journey begins as we set sail into the open sea.</p>
+            <div id="entry1" class="log-details">
+                <p>The winds are favorable, and the crew is ready. The horizon awaits!</p>
             </div>
         </div>
 
-        <!-- Rumor Bubble 2 - Praising the Captain's Achievements -->
-        <div class="rumor-bubble" onclick="toggleRumorContent('rumor2')">
-            <div class="rumor-2">Pirate #2: "Aye, Joyboy’s the real deal. Free as the wind, and a true leader!"</div>
-            <div id="rumor2" class="rumor-content">
-                <p>“I say ye wrong, mate. Joyboy’s no fool. His heart’s as big as the ocean, and his smile lights up the crew’s spirits. Not to mention, his strength, determination, and love for his mates make him a pirate like no other. Ye can’t fake that kind of freedom, mate!”</p>
+        <div class="log-entry" onclick="toggleDetails('entry2')">
+            <h2>Entry #2: A Storm Approaches</h2>
+            <p>Dark clouds loom on the horizon. A storm is coming...</p>
+            <div id="entry2" class="log-details">
+                <p>The ship creaks under the pressure. The crew braces for impact!</p>
             </div>
         </div>
 
+        <!-- Pirate Ship Image -->
+        <img id="pirate-ship" src="ship.jpeg" alt="Pirate Ship" onclick="shipClicked()">
+
+        <!-- Map -->
+        <div id="map"></div>
+
+        <!-- Captain of the Ship Message -->
+        <div id="captain-message">
+            The Captain!
+        </div>
+
+        <!-- Rumor Bubbles -->
+        <div class="rumor-bubble-container">
+            <div class="rumor-bubble">
+                <h3>Rumor #1</h3>
+                <p>"They say Joyboy’s just a lucky fool who gets by with a smile. Not much of a captain, really."</p>
+            </div>
+            <div class="rumor-bubble">
+                <h3>Rumor #2</h3>
+                <p>"Don’t listen to that nonsense! Joyboy’s the real deal! He’s got the heart of a true leader, never backs down, and always keeps his crew close."</p>
+            </div>
+        </div>
     </div>
 
     <!-- Script for interactivity -->
     <script>
-        // Function to toggle the display of each rumor's content
-        function toggleRumorContent(rumorId) {
-            var content = document.getElementById(rumorId);
-            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        function toggleDetails(entryId) {
+            var entry = document.getElementById(entryId);
+            entry.style.display = entry.style.display === 'block' ? 'none' : 'block';
         }
+
+        function shipClicked() {
+            document.getElementById('pirate-ship').style.transform = 'rotate(360deg)';
+            alert('Set sail for adventure!');
+        }
+
+        // Leaflet map integration for pirate map
+        var map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker = L.marker([51.5, -0.09]).addTo(map); // Example marker
+        marker.bindPopup("This is a location on your pirate map!").openPopup();
     </script>
 
 </body>
+
 </html>
