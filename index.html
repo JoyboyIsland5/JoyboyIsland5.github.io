@@ -3,36 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pirate Logbook</title>
+    <title>Pirate Logbook with Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        /* Pirate Logbook Themed Styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1d1d1d;
+            font-family: 'Georgia', serif; /* A more pirate-like font */
+            background-image: url('parchment.jpg'); /* Background image simulating parchment paper */
+            background-size: cover;
             color: #fff;
             margin: 0;
             padding: 20px;
+            font-size: 18px;
         }
 
         .logbook-container {
             max-width: 1000px;
             margin: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            border: 5px solid #b38b4d; /* Gold-like border for a pirate theme */
         }
 
         h1 {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 3rem;
             text-transform: uppercase;
             margin-bottom: 40px;
+            font-family: 'PirateFont', serif; /* Custom Pirate font */
+            color: #f7d65b;
         }
 
         .log-entry {
-            background-color: #333;
-            padding: 15px;
-            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 15px;
             margin: 15px 0;
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
             cursor: pointer;
@@ -40,7 +47,8 @@
 
         .log-entry h2 {
             margin: 0;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            color: #f7d65b;
         }
 
         .log-entry p {
@@ -50,20 +58,40 @@
 
         .log-details {
             display: none;
-            background-color: #444;
+            background-color: rgba(255, 255, 255, 0.1);
             padding: 10px;
             border-radius: 5px;
             margin-top: 10px;
         }
 
         .log-entry:hover {
-            background-color: #555;
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
         .log-entry:hover .log-details {
             display: block;
         }
+
+        /* Pirate Ship Interactive Styles */
+        #pirate-ship {
+            position: absolute;
+            bottom: 30px;
+            right: 50px;
+            width: 100px;
+            cursor: pointer;
+            transition: transform 2s ease-in-out;
+        }
+
+        /* Map Styles */
+        #map {
+            height: 500px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 2px solid #f7d65b;
+        }
     </style>
+    <!-- You can add a pirate font from Google Fonts or use a custom one -->
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -96,18 +124,68 @@
             <a href="https://on.soundcloud.com/YMaHhSWdF4aTTi5LA" target="_blank" style="color: #ffcc00;">Listen on SoundCloud</a>
         </div>
     </div>
-
+    
+    <!-- Map Section -->
+    <div id="map"></div>
+    
+    <!-- Pirate Ship Image -->
+    <img id="pirate-ship" src="pirate-ship.png" alt="Pirate Ship" onclick="sailShip()">
 </div>
 
+<!-- Include Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 <script>
-    // Add interactivity for toggling log details
-    const logEntries = document.querySelectorAll('.log-entry');
-    logEntries.forEach(entry => {
-        entry.addEventListener('click', () => {
-            const details = entry.querySelector('.log-details');
-            details.style.display = details.style.display === 'block' ? 'none' : 'block';
-        });
-    });
+// Initialize the map
+const map = L.map('map').setView([51.505, -0.09], 2); // Set the view to a global position (adjust as needed)
+
+// Set up OpenStreetMap as the tile layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// Add markers for each track release
+const tracks = [
+    {
+        title: "FRONTLINE!!!",
+        description: "Released on January 1, 2025. A song about overcoming life's struggles.",
+        coordinates: [37.7749, -122.4194], // San Francisco (example)
+        link: "https://open.spotify.com/album/4y35XvwPefIN04ZjYVW2zq?si=4qx6TgdVQ72eV7-wQ2OsYA"
+    },
+    {
+        title: "NEVERLAND!",
+        description: "Released on February 15, 2025. A dreamy escape into freedom.",
+        coordinates: [40.7128, -74.0060], // New York (example)
+        link: "https://on.soundcloud.com/mUKEbaqASEqYNtkr7"
+    },
+    {
+        title: "ADDICTED2LIVING!",
+        description: "Released on March 10, 2024. A reflection on living freely.",
+        coordinates: [51.5074, -0.1278], // London (example)
+        link: "https://on.soundcloud.com/YMaHhSWdF4aTTi5LA"
+    }
+];
+
+// Loop through the tracks and add markers to the map
+tracks.forEach(track => {
+    L.marker(track.coordinates)
+        .addTo(map)
+        .bindPopup(`
+            <strong>${track.title}</strong><br>
+            ${track.description}<br>
+            <a href="${track.link}" target="_blank" style="color: #ffcc00;">Listen Now</a>
+        `);
+});
+
+// Pirate Ship Movement Function
+function sailShip() {
+    const ship = document.getElementById('pirate-ship');
+    ship.style.transform = "translateX(500px)"; // Moves ship to the right
+    setTimeout(() => {
+        alert("Arrr! The ship has sailed to a new location!");
+        ship.style.transform = "translateX(0)"; // Resets ship position after 2 seconds
+    }, 2000);
+}
 </script>
 
 </body>
